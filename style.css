@@ -1,0 +1,42 @@
+#logs {
+    background: #111;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+    font-size: 14px;
+    white-space: pre-wrap;
+}
+
+#outputContent {
+    background: #111;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    white-space: pre-wrap;
+}
+
+.section2 {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+.steps {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+}
+.step {
+    text-align: center;
+}
+.circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 2px solid #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}

@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inkspire</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --orange: #ff6a00;
+    --orange-dim: rgba(255,106,0,0.15);
+    --bg: #080808;
+    --surface: #111111;
+    --surface2: #1a1a1a;
+    --border: #222;
+    --text: #f0f0f0;
+    --muted: #666;
+    --green: #00e676;
+    --red: #ff4444;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
+
+/* ─── NAVBAR ─── */
+.navbar {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    padding: 18px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(8,8,8,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+}
+
+.logo { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+.logo span { color: var(--orange); }
+
+.nav-links { display: flex; gap: 30px; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+
+.nav-btn {
+    background: var(--orange);
+    padding: 9px 22px;
+    border-radius: 100px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    transition: opacity 0.2s;
+}
+.nav-btn:hover { opacity: 0.85; }
+
+/* ─── HERO ─── */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 120px 80px 60px;
+    gap: 60px;
+}
+
+.hero-left { max-width: 50%; }
+
+.hero-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--orange);
+    border: 1px solid var(--orange-dim);
+    padding: 5px 14px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+}
+
+.hero h1 {
+    font-size: 62px;
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -2px;
+}
+.hero h1 span { color: var(--orange); }
+
+.hero p {
+    margin-top: 22px;
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.7;
+    max-width: 420px;
+}
+
+/* ─── CARD ─── */
+.card {
+    background: var(--surface);
+    padding: 32px;
+    border-radius: 24px;
+    width: 420px;
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+    box-shadow: 0 0 60px rgba(255,106,0,0.08);
+}
+
+.card-label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+}
+
+textarea {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    resize: vertical;
+    min-height: 140px;
+    margin-bottom: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+textarea:focus { border-color: var(--orange); }
+textarea::placeholder { color: var(--muted); }
+
+.generate-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--orange);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: white;
+    transition: opacity 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.generate-btn:hover { opacity: 0.9; }
+.generate-btn:active { transform: scale(0.98); }
+.generate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ─── HOW IT WORKS ─── */
+.section2 {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 80px 60px;
+    border-top: 1px solid var(--border);
+}
+
+.section2 h2 { font-size: 36px; font-weight: 800; margin-bottom: 60px; letter-spacing: -1px; }
+
+.steps { display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; }
+
+.step { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+
+.circle {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 1.5px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    background: var(--surface);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.step h3 { font-size: 15px; font-weight: 700; }
+.step p { font-size: 13px; color: var(--muted); }
+
+/* ─── AGENT ROOM ─── */
+#agent-room {
+    padding: 80px 60px;
+    border-top: 1px solid var(--border);
+}
+
+#agent-room h2 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 40px;
+    letter-spacing: -0.5px;
+}
+
+.agents-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 40px;
+}
+
+.agent-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 36px;
+    text-align: center;
+    width: 180px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    position: relative;
+}
+
+.agent-card.active {
+    border-color: var(--orange);
+    box-shadow: 0 0 30px rgba(255,106,0,0.15);
+}
+
+.agent-card.done {
+    border-color: var(--green);
+    box-shadow: 0 0 20px rgba(0,230,118,0.08);
+}
+
+.agent-icon { font-size: 32px; margin-bottom: 10px; }
+
+.agent-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.agent-status {
+    font-size: 11px;
+    color: var(--muted);
+    min-height: 16px;
+    transition: color 0.3s;
+}
+
+.agent-card.active .agent-status { color: var(--orange); }
+.agent-card.done .agent-status { color: var(--green); }
+
+/* thinking dots */
+.dots::after {
+    content: '';
+    animation: dots 1.2s infinite;
+}
+@keyframes dots {
+    0%   { content: ''; }
+    33%  { content: '.'; }
+    66%  { content: '..'; }
+    100% { content: '...'; }
+}
+
+/* connector arrow */
+.connector {
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    color: var(--border);
+    font-size: 22px;
+    transition: color 0.3s;
+}
+.connector.active { color: var(--orange); }
+
+/* log box */
+.log-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 24px;
+    font-size: 13px;
+    color: var(--muted);
+    min-height: 60px;
+    font-family: 'DM Mono', 'Courier New', monospace;
+    line-height: 1.8;
+}
+
+.log-box .log-line { display: flex; align-items: flex-start; gap: 8px; }
+
+/* ─── OUTPUT ─── */
+#output-section {
+    padding: 80px 60px;
+    border-top: 1px solid var(--border);
+}
+
+#output-section h2 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 40px;
+    letter-spacing: -0.5px;
+}
+
+.output-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+}
+
+.output-col {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    opacity: 0.4;
+    transition: opacity 0.4s, border-color 0.3s;
+}
+
+.output-col.loaded {
+    opacity: 1;
+}
+
+.col-header {
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.col-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.col-icon { font-size: 18px; }
+.col-label { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; }
+
+.col-body {
+    padding: 24px;
+    font-size: 14px;
+    line-height: 1.75;
+    color: #ccc;
+    flex: 1;
+    white-space: pre-wrap;
+    min-height: 200px;
+    overflow-y: auto;
+    max-height: 500px;
+}
+
+.col-footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+}
+
+.btn-approve {
+    flex: 1;
+    padding: 10px;
+    background: rgba(0,230,118,0.1);
+    border: 1px solid rgba(0,230,118,0.3);
+    border-radius: 10px;
+    color: var(--green);
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    transition: background 0.2s;
+}
+.btn-approve:hover { background: rgba(0,230,118,0.2); }
+.btn-approve.approved {
+    background: rgba(0,230,118,0.2);
+    border-color: var(--green);
+}
+
+.btn-regen {
+    flex: 1;
+    padding: 10px;
+    background: rgba(255,106,0,0.08);
+    border: 1px solid rgba(255,106,0,0.2);
+    border-radius: 10px;
+    color: var(--orange);
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    transition: background 0.2s;
+}
+.btn-regen:hover { background: rgba(255,106,0,0.15); }
+
+.placeholder-text {
+    color: var(--muted);
+    font-style: italic;
+    font-size: 13px;
+}
+
+/* copy button */
+.btn-copy {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 11px;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+}
+.btn-copy:hover { color: var(--text); border-color: #444; }
+
+/* ─── FOOTER ─── */
+footer {
+    text-align: center;
+    padding: 40px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* ─── SPINNER ─── */
+.spinner {
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: none;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 900px) {
+    .hero { flex-direction: column; padding: 100px 30px 60px; }
+    .hero-left { max-width: 100%; }
+    .card { width: 100%; }
+    .output-columns { grid-template-columns: 1fr; }
+    .navbar { padding: 16px 24px; }
+    .agents-row { flex-wrap: wrap; }
+    #agent-room, #output-section { padding: 60px 24px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">🟠 <span>Ink</span>spire</div>
+    <div class="nav-links">
+        <a href="#how">How it Works</a>
+        <a href="#agent-room">Agent Room</a>
+        <a href="#output-section">Output</a>
+    </div>
+    <button class="nav-btn" onclick="scrollToSection()">Start Campaign</button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-left">
+        <div class="hero-tag">✦ AI Content Engine</div>
+        <h1>
+            Raw Ideas to<br>
+            <span>Refined Ink.</span>
+        </h1>
+        <p>Paste your content and let three AI agents transform it into a blog post, social thread, and email — simultaneously.</p>
+    </div>
+
+    <div class="card">
+        <div class="card-label">Your raw content</div>
+        <textarea id="inputText" placeholder="Paste your content, idea, or brief here..."></textarea>
+        <button class="generate-btn" id="generateBtn" onclick="generateContent()">
+            <span id="btnText">⚡ Generate Content</span>
+            <div class="spinner" id="btnSpinner"></div>
+        </button>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="section2">
+    <h2>Three Minds, One Mission</h2>
+    <div class="steps">
+        <div class="step">
+            <div class="circle">🔍</div>
+            <h3>Researcher</h3>
+            <p>Extracts key facts & tone</p>
+        </div>
+        <div class="step">
+            <div class="circle">✍️</div>
+            <h3>Copywriter</h3>
+            <p>Crafts blog, thread & email</p>
+        </div>
+        <div class="step">
+            <div class="circle">✅</div>
+            <h3>Editor</h3>
+            <p>Reviews & approves output</p>
+        </div>
+    </div>
+</section>
+
+<!-- AGENT ROOM -->
+<section id="agent-room">
+    <h2>🤖 Agent Room</h2>
+
+    <div class="agents-row">
+        <div class="agent-card" id="agent-researcher">
+            <div class="agent-icon">🔍</div>
+            <div class="agent-name">Researcher</div>
+            <div class="agent-status" id="status-researcher">Idle</div>
+        </div>
+
+        <div class="connector" id="conn-1">→</div>
+
+        <div class="agent-card" id="agent-copywriter">
+            <div class="agent-icon">✍️</div>
+            <div class="agent-name">Copywriter</div>
+            <div class="agent-status" id="status-copywriter">Idle</div>
+        </div>
+
+        <div class="connector" id="conn-2">→</div>
+
+        <div class="agent-card" id="agent-editor">
+            <div class="agent-icon">✅</div>
+            <div class="agent-name">Editor</div>
+            <div class="agent-status" id="status-editor">Idle</div>
+        </div>
+    </div>
+
+    <div class="log-box" id="logs">Waiting for input...</div>
+</section>
+
+<!-- OUTPUT -->
+<section id="output-section">
+    <h2>📊 Final Output</h2>
+
+    <div class="output-columns">
+        <!-- BLOG -->
+        <div class="output-col" id="col-blog">
+            <div class="col-header">
+                <div class="col-title">
+                    <span class="col-icon">📝</span>
+                    <span class="col-label">Blog Post</span>
+                </div>
+                <button class="btn-copy" onclick="copyContent('blog')">Copy</button>
+            </div>
+            <div class="col-body" id="content-blog">
+                <span class="placeholder-text">Blog content will appear here...</span>
+            </div>
+            <div class="col-footer">
+                <button class="btn-approve" id="approve-blog" onclick="approveContent('blog')">✓ Approve</button>
+                <button class="btn-regen" onclick="regenContent('blog')">↺ Regenerate</button>
+            </div>
+        </div>
+
+        <!-- THREAD -->
+        <div class="output-col" id="col-thread">
+            <div class="col-header">
+                <div class="col-title">
+                    <span class="col-icon">🧵</span>
+                    <span class="col-label">Social Thread</span>
+                </div>
+                <button class="btn-copy" onclick="copyContent('thread')">Copy</button>
+            </div>
+            <div class="col-body" id="content-thread">
+                <span class="placeholder-text">Social thread will appear here...</span>
+            </div>
+            <div class="col-footer">
+                <button class="btn-approve" id="approve-thread" onclick="approveContent('thread')">✓ Approve</button>
+                <button class="btn-regen" onclick="regenContent('thread')">↺ Regenerate</button>
+            </div>
+        </div>
+
+        <!-- EMAIL -->
+        <div class="output-col" id="col-email">
+            <div class="col-header">
+                <div class="col-title">
+                    <span class="col-icon">📧</span>
+                    <span class="col-label">Email</span>
+                </div>
+                <button class="btn-copy" onclick="copyContent('email')">Copy</button>
+            </div>
+            <div class="col-body" id="content-email">
+                <span class="placeholder-text">Email content will appear here...</span>
+            </div>
+            <div class="col-footer">
+                <button class="btn-approve" id="approve-email" onclick="approveContent('email')">✓ Approve</button>
+                <button class="btn-regen" onclick="regenContent('email')">↺ Regenerate</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    Built with Inkspire — Three agents, one mission.
+</footer>
+
+<script>
+// ── Helpers ──────────────────────────────────────────────
+function scrollToSection() {
+    document.getElementById("how").scrollIntoView({ behavior: "smooth" });
+}
+
+function setAgent(id, state, statusText) {
+    const card = document.getElementById(`agent-${id}`);
+    const status = document.getElementById(`status-${id}`);
+    card.className = 'agent-card';
+    if (state) card.classList.add(state);
+    status.className = 'agent-status';
+    if (state === 'active') status.classList.add('dots');
+    status.textContent = statusText;
+}
+
+function setConnector(id, active) {
+    const c = document.getElementById(`conn-${id}`);
+    c.className = active ? 'connector active' : 'connector';
+}
+
+function appendLog(msg) {
+    const logs = document.getElementById("logs");
+    const line = document.createElement("div");
+    line.className = "log-line";
+    line.textContent = `• ${msg}`;
+    if (logs.textContent === "Waiting for input...") logs.innerHTML = "";
+    logs.appendChild(line);
+}
+
+function resetAgents() {
+    ['researcher','copywriter','editor'].forEach(a => setAgent(a, '', 'Idle'));
+    setConnector(1, false);
+    setConnector(2, false);
+    document.getElementById("logs").innerHTML = "";
+    ['blog','thread','email'].forEach(type => {
+        document.getElementById(`col-${type}`).classList.remove('loaded');
+        document.getElementById(`content-${type}`).innerHTML = `<span class="placeholder-text">${type.charAt(0).toUpperCase()+type.slice(1)} content will appear here...</span>`;
+        document.getElementById(`approve-${type}`).classList.remove('approved');
+        document.getElementById(`approve-${type}`).textContent = '✓ Approve';
+    });
+}
+
+// ── Parse output into sections ───────────────────────────
+function parseContent(raw) {
+    const blogMatch   = raw.match(/BLOG:\s*([\s\S]*?)(?=THREAD:|EMAIL:|$)/i);
+    const threadMatch = raw.match(/THREAD:\s*([\s\S]*?)(?=BLOG:|EMAIL:|$)/i);
+    const emailMatch  = raw.match(/EMAIL:\s*([\s\S]*?)(?=BLOG:|THREAD:|$)/i);
+
+    return {
+        blog:   blogMatch   ? blogMatch[1].trim()   : raw,
+        thread: threadMatch ? threadMatch[1].trim() : '',
+        email:  emailMatch  ? emailMatch[1].trim()  : '',
+    };
+}
+
+function populateColumns(content) {
+    const parsed = parseContent(content);
+
+    ['blog','thread','email'].forEach(type => {
+        const col  = document.getElementById(`col-${type}`);
+        const body = document.getElementById(`content-${type}`);
+        body.textContent = parsed[type] || `No ${type} content found.`;
+        col.classList.add('loaded');
+    });
+}
+
+// ── Copy ─────────────────────────────────────────────────
+function copyContent(type) {
+    const text = document.getElementById(`content-${type}`).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+        const btn = document.querySelector(`#col-${type} .btn-copy`);
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 1500);
+    });
+}
+
+// ── Approve ──────────────────────────────────────────────
+function approveContent(type) {
+    const btn = document.getElementById(`approve-${type}`);
+    btn.classList.add('approved');
+    btn.textContent = '✓ Approved';
+}
+
+// ── Regenerate (calls backend again) ─────────────────────
+async function regenContent(type) {
+    const text = document.getElementById("inputText")?.value;
+    if (!text) { alert("Please enter content first"); return; }
+
+    const body = document.getElementById(`content-${type}`);
+    body.textContent = "Regenerating...";
+    document.getElementById(`col-${type}`).classList.remove('loaded');
+
+    try {
+        const API_BASE = window.API_BASE || "http://127.0.0.1:8000";
+        const res = await fetch(`${API_BASE}/generate`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text })
+        });
+        if (!res.ok) throw new Error(`Backend error: ${res.status}`);
+        const data = await res.json();
+        const parsed = parseContent(data.content || "");
+        body.textContent = parsed[type] || `No ${type} content found.`;
+        document.getElementById(`col-${type}`).classList.add('loaded');
+        document.getElementById(`approve-${type}`).classList.remove('approved');
+        document.getElementById(`approve-${type}`).textContent = '✓ Approve';
+    } catch (err) {
+        body.textContent = `❌ Error: ${err.message}`;
+        document.getElementById(`col-${type}`).classList.add('loaded');
+    }
+}
+
+// ── Main generate ─────────────────────────────────────────
+async function generateContent() {
+    const text = document.getElementById("inputText")?.value;
+
+    if (!text || text.trim() === "") {
+        alert("Please enter some text");
+        return;
+    }
+
+    // Reset UI
+    resetAgents();
+
+    // Disable button
+    const btn = document.getElementById("generateBtn");
+    const btnText = document.getElementById("btnText");
+    const spinner = document.getElementById("btnSpinner");
+    btn.disabled = true;
+    btnText.textContent = "Generating...";
+    spinner.style.display = "block";
+
+    // Animate: Researcher
+    setAgent('researcher', 'active', 'Analyzing');
+    appendLog("🔍 Research Agent analyzing your content...");
+
+    try {
+        const API_BASE = window.API_BASE || "http://127.0.0.1:8000";
+
+        const res = await fetch(`${API_BASE}/generate`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text })
+        });
+
+        if (!res.ok) throw new Error(`Backend error: ${res.status} ${res.statusText}`);
+
+        // Animate mid-way (approximate timing)
+        setAgent('researcher', 'done', 'Done ✓');
+        setConnector(1, true);
+        setAgent('copywriter', 'active', 'Writing');
+        appendLog("✍️ Copywriter generating blog, thread & email...");
+
+        const data = await res.json();
+
+        // Show logs from backend
+        if (data.logs) {
+            data.logs.forEach(l => appendLog(l));
+        }
+
+        // Animate: Editor
+        setAgent('copywriter', 'done', 'Done ✓');
+        setConnector(2, true);
+        setAgent('editor', 'active', 'Reviewing');
+
+        setTimeout(() => {
+            setAgent('editor', 'done', 'Approved ✓');
+
+            // Populate 3 columns
+            if (data.content) {
+                populateColumns(data.content);
+            } else {
+                ['blog','thread','email'].forEach(t => {
+                    document.getElementById(`content-${t}`).textContent = "⚠️ No content generated";
+                    document.getElementById(`col-${t}`).classList.add('loaded');
+                });
+            }
+
+            // Scroll to output
+            document.getElementById("output-section").scrollIntoView({ behavior: "smooth" });
+
+        }, 800);
+
+    } catch (error) {
+        console.error(error);
+        appendLog(`❌ Error: ${error.message}`);
+        setAgent('researcher', '', 'Error');
+        ['blog','thread','email'].forEach(t => {
+            document.getElementById(`content-${t}`).textContent = `❌ ${error.message}`;
+            document.getElementById(`col-${t}`).classList.add('loaded');
+        });
+    } finally {
+        btn.disabled = false;
+        btnText.textContent = "⚡ Generate Content";
+        spinner.style.display = "none";
+    }
+}
+</script>
+
+</body>
+</html>
