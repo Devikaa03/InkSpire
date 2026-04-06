@@ -1,14 +1,36 @@
 # 🟠 Inkspire — AI Content Generation Engine
 
-Inkspire is an intelligent content generation system that uses a multi-agent AI pipeline to transform raw source material into polished **blog posts**, **social media threads**, and **email copy** — all fact-checked and verified.
+---
+
+## The Problem
+
+Creating consistent, fact-accurate marketing content across multiple formats — blog posts, social threads, and emails — is time-consuming and error-prone. Writers frequently introduce inaccuracies or invented claims when working from raw source material. Existing AI tools generate content without verifying facts first, leading to unreliable outputs.
 
 ---
 
-## 🤖 How it Works
+## The Solution
 
-1. **Research Agent** — reads your raw input, extracts a verified Fact-Sheet (features, claims, audience, tone) and flags any ambiguous statements
-2. **Copywriter Agent** — uses the Fact-Sheet as the single source of truth to generate a Blog, Social Thread, and Email
-3. **Editor Agent** — reviews the content against the Fact-Sheet and approves or rejects it
+Inkspire uses a three-agent AI pipeline to transform raw source material into polished, fact-checked content:
+
+- **Research Agent** — reads your raw input and extracts a verified Fact-Sheet (product features, key claims, target audience, tone). Flags any ambiguous statements. This Fact-Sheet is the single source of truth for all content generation.
+- **Copywriter Agent** — uses only the Fact-Sheet to generate a Blog Post, Social Thread, and Email. Cannot invent facts not present in the Fact-Sheet.
+- **Editor Agent** — cross-checks the generated content against the Fact-Sheet and either approves it or rejects it with a reason, triggering a regeneration if needed.
+
+The frontend displays the Fact-Sheet in real time so users can verify what the AI extracted before trusting the output. Each content format (Blog, Thread, Email) has independent Copy, Approve, and Regenerate controls.
+
+---
+
+## Tech Stack
+
+| Category | Technology |
+|----------|-----------|
+| Programming Languages | Python, JavaScript |
+| Backend Framework | FastAPI |
+| Frontend | HTML, CSS, JavaScript |
+| AI Model | Llama 3.1 (via Groq API) |
+| HTTP Client | Python `requests`, browser `fetch` |
+| Environment Variables | `python-dotenv` |
+| Dependencies | `openai`, `uvicorn`, `pydantic` |
 
 ---
 
@@ -62,25 +84,6 @@ cd static
 python -m http.server 5500
 ```
 Then open `http://localhost:5500` in your browser.
-
----
-
-## 🚀 Live Demo
-
-- **Frontend:** [your-inkspire.vercel.app](https://your-inkspire.vercel.app)
-- **Backend API:** [your-inkspire-backend.onrender.com](https://your-inkspire-backend.onrender.com)
-
----
-
-## 🛠️ Tech Stack
-
-| Layer | Technology |
-|-------|-----------|
-| Frontend | HTML, CSS, JavaScript |
-| Backend | Python, FastAPI |
-| AI Model | Llama 3 via Groq API |
-| Communication | REST API + UART |
-| Deployment | Vercel (frontend), Render (backend) |
 
 ---
 
