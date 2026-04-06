@@ -87,30 +87,6 @@ Then open `http://localhost:5500` in your browser.
 
 ---
 
-## 📋 API Endpoint
-
-**POST** `/generate`
-
-Request body:
-```json
-{
-  "text": "Your raw content or brief here"
-}
-```
-
-Response:
-```json
-{
-  "fact_sheet": { ... },
-  "content": "BLOG: ... THREAD: ... EMAIL: ...",
-  "review": "APPROVED",
-  "logs": [ "..." ],
-  "flags": [ ... ]
-}
-```
-
----
-
 ## 👩‍💻 Authors
 
 Built by Devika Vinod
